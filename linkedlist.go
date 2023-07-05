@@ -24,10 +24,12 @@ func NewNode[T interface{}](initValue T) *Node[T] {
 	return &Node[T]{initValue, nil}
 }
 
+// Value gets the t data stored in the node.
 func (nd *Node[T]) Value() T {
 	return nd.value
 }
 
+// Next gets the reference to the consecutive node.
 func (nd *Node[T]) Next() *Node[T] {
 	return nd.next
 }
@@ -53,22 +55,27 @@ func NewList[T interface{}](args ...T) *List[T] {
 	return res
 }
 
+// Head gets the first node reference.
 func (l *List[T]) Head() *Node[T] {
 	return l.head
 }
 
+// Tail gets the last node reference.
 func (l *List[T]) Tail() *Node[T] {
 	return l.tail
 }
 
+// Len gets the size of the list.
 func (l List[T]) Len() int {
 	return l.size
 }
 
+// IsEmpty returns true if the head/tail is nil.
 func (l *List[T]) IsEmpty() bool {
-	return IsNil(l.head)
+	return IsNil(l.head) || IsNil(l.tail)
 }
 
+// Append adds a new node at the end of the list.
 func (l *List[T]) Append(value T) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
@@ -86,6 +93,7 @@ func (l *List[T]) Append(value T) {
 	l.tail = newNode
 }
 
+// Unshift adds a new node from the top of the list.
 func (l *List[T]) Unshift(value T) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
@@ -103,6 +111,7 @@ func (l *List[T]) Unshift(value T) {
 	l.head = newNode
 }
 
+// Pop removes the first element from the top of the list.
 func (l *List[T]) Pop() (T, error) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
@@ -124,6 +133,7 @@ func (l *List[T]) Pop() (T, error) {
 	return res, nil
 }
 
+// Clear dereference the head and tail of the list.
 func (l *List[T]) Clear() {
 	l.mu.Lock()
 	defer l.mu.Unlock()
