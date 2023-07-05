@@ -7,6 +7,7 @@ func IsNil[T interface{}](node *Node[T]) bool {
 	return node == nil
 }
 
+// Each runs through any linked list, and allows you to interact on each node with a callback
 func Each[T interface{}](list *List[T], callback EachCallback[T]) {
 	temp := list.head
 	for temp != nil {
@@ -15,6 +16,8 @@ func Each[T interface{}](list *List[T], callback EachCallback[T]) {
 	}
 }
 
+// Filter removes any node if its value does not meet the condition returned in the callback.
+// The type of the linked list must be a comparable.
 func Filter[T comparable](list *List[T], callback FilterCallback[T]) {
 	temp := list.head
 	for temp != nil && !list.IsEmpty() {
@@ -31,6 +34,7 @@ func Filter[T comparable](list *List[T], callback FilterCallback[T]) {
 }
 
 // Remove the first occurency of an element.
+// The type of the linked list must be a comparable.
 func Remove[T comparable](list *List[T], mark T) {
 	list.mu.Lock()
 	defer list.mu.Unlock()
